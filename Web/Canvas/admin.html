@@ -18,7 +18,7 @@
                row.appendChild(head);
             });
             tbl.appendChild(row);
-            $.each(data["users"], function(idx, elem) {
+            $.each(data, function(idx, elem) {
                var row = document.createElement("tr");
                $.each(elem, function(key, val) {
                   var col = document.createElement("td");
