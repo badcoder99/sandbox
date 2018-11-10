@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Admin Page</title>
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+   <h1>Admin Page</h1>
+   <div id="userList"></div>
+   <script>
+      (function() {
+         $.getJSON("users.json", function(data) {
+            var tbl = document.createElement("table");
+            var row = document.createElement("tr");
+            ["User ID", "First Name", "Last Name"].forEach(function(elem) {
+               var head = document.createElement("th");
+               head.innerHTML = elem;
+               row.appendChild(head);
+            });
+            tbl.appendChild(row);
+            $.each(data["users"], function(idx, elem) {
+               var row = document.createElement("tr");
+               $.each(elem, function(key, val) {
+                  var col = document.createElement("td");
+                  col.innerHTML = val;
+                  row.appendChild(col);
+               });
+               tbl.appendChild(row);
+            });
+            $("#userList").append(tbl);
+         });
+      })();
+   </script>
+</body>
+</html>
