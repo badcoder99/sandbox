@@ -1,7 +1,12 @@
 #include <windows.h>
 #include <windowsx.h>
+#include <winuser.h>
 #include <d3d9.h>
 
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <string>
 #include <vector>
 using namespace std;
 
@@ -11,6 +16,7 @@ using namespace std;
 #define ESC_KEY         (0x1B)
 #define PTS_PER_LINE    (2)
 #define VERTEX_FORMAT   (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
+#define TIMER_ID        (1001)
 
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "user32.lib")
@@ -20,18 +26,64 @@ LPDIRECT3DDEVICE9 Device;
 LPDIRECT3DVERTEXBUFFER9 Buffer = NULL;
 UINT BufferSize = 0;
 
+LARGE_INTEGER Frequency{};
+
+bool Paused = false;
+
 void InitD3D(HWND hWnd);
-void InitGraphics(); 
+void LoadGraphics(); 
 void RenderFrame();
+void UpdateFrame();
 void DestroyD3D();
+
+VOID CALLBACK TimerProc(HWND hWnd, UINT msg, UINT idTimer, DWORD dwTime) {
+      UpdateFrame();
+      LoadGraphics();
+      RenderFrame(); 
+}
+
+void ShowValue(HWND hWnd, int value) {
+   char buf[80];
+   string str = to_string(value);
+   for (int i = 0; i < str.length(); ++i) {
+      buf[i] = str[i];
+   }
+   buf[str.length()] = '\0';
+   MessageBox(hWnd, buf, NULL, MB_OK);
+} 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
    switch(msg) {
+   case WM_KEYDOWN:
+      switch(wParam) {
+      case VK_RIGHT:
+         ++SIDES;
+         break;
+
+      case VK_LEFT:
+         SIDES = max(3, SIDES - 1);
+         break;
+      
+      case VK_UP:
+         ++DEGREE;
+         break;
+   
+      case VK_DOWN:
+         DEGREE = max(1, DEGREE - 1);
+         break;
+      }
+      break;
+
    case WM_CHAR:
       switch (wParam) {
       case ESC_KEY:
          PostQuitMessage(0);
          break;
+
+      case VK_SPACE:
+         Paused = !Paused;
+         break;
+   
       }
       break;
  
@@ -40,6 +92,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
       break;
 
    case WM_DESTROY:
+      KillTimer(hWnd, TIMER_ID);
+      DestroyD3D();
       PostQuitMessage(0);
       break;
    
@@ -54,6 +108,7 @@ int WINAPI WinMain(HINSTANCE hIns, HINSTANCE, LPSTR lpCmd, int nCmd) {
    HWND hWnd;
    WNDCLASSEX wc;
 
+   QueryPerformanceFrequency(&Frequency);
    ZeroMemory(&wc, sizeof(WNDCLASSEX));
 
    wc.cbSize = sizeof(WNDCLASSEX);
@@ -69,15 +124,14 @@ int WINAPI WinMain(HINSTANCE hIns, HINSTANCE, LPSTR lpCmd, int nCmd) {
 
    ShowWindow(hWnd, nCmd);
    InitD3D(hWnd);
+   SetTimer(hWnd, TIMER_ID, 1000 / FRAME_RATE, (TIMERPROC)TimerProc);
    
    MSG msg;
    while (GetMessage(&msg, NULL, 0, 0)) {
       TranslateMessage(&msg);
       DispatchMessage(&msg);
-      RenderFrame();
    }
    
-   DestroyD3D();
    return msg.wParam;
 }
 
@@ -97,10 +151,37 @@ void InitD3D(HWND hWnd) {
    D3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
       D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &Device);
 
-   InitGraphics();
+   LoadGraphics();
 }
 
-void InitGraphics() {
+void UpdateFrame() {
+   static LARGE_INTEGER lastUpdate{};
+   LARGE_INTEGER thisUpdate;
+   QueryPerformanceCounter(&thisUpdate);
+   if (lastUpdate.QuadPart && !Paused) {
+      double secs = static_cast<double>(thisUpdate.QuadPart - lastUpdate.QuadPart);
+      secs /= Frequency.QuadPart; 
+      secs = fabs(secs);
+      THETA += static_cast<float>(secs * THETA_PER_SEC);
+      while (THETA >= PI * 2) {
+         THETA -= PI * 2;
+      }
+      RATIO_THETA += static_cast<float>(secs * RATIO_PER_SEC);
+      while (RATIO_THETA >= PI * 2) {
+         RATIO_THETA -= PI * 2;
+      }
+      RATIO = sin(RATIO_THETA);
+      IN_RATIO = RATIO / AU;  
+   }
+   lastUpdate = thisUpdate;
+}
+
+void LoadGraphics() {
+   if (Buffer) {
+      Buffer->Release();
+      Buffer = NULL;
+   }
+
    vector<Vertex> v = GetPts();
    BufferSize = v.size();
    UINT bytes = BufferSize * sizeof(Vertex);
@@ -127,6 +208,6 @@ void RenderFrame() {
 void DestroyD3D() {
     Buffer->Release();
     Device->Release();
-    D3D->Release(); 
+    D3D->Release();
 }
 

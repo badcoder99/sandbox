@@ -1,10 +1,11 @@
 #include "Render.h"
 
 vector<Vertex> v;
-map<int, int> step;
 
 void push(Point pt) { 
-   v.push_back({ GetX(pt.x), GetY(pt.y), 0.5, D3DCOLOR_ARGB(0, 0, 0, 0) });
+   float x = pt.x * cos(THETA) - pt.y * sin(THETA);
+   float y = pt.y * cos(THETA) + pt.x * sin(THETA);
+   v.push_back({ GetX(x), GetY(y), 0, D3DCOLOR_ARGB(0, 0, 0, 0) });
 }
 
 float GetX(float x) {
@@ -47,45 +48,22 @@ int powi(int x, int y) {
 }
 
 void SubPolygon(Point A, Point B, int degree, bool in) {
-   if (degree == (in ? DEGREE - 5 : DEGREE)) {
+   if (degree >= (in ? DEGREE - 5 : DEGREE)) {
       return;
    }
-   
-   bool valid = false;
-
-   if (degree == 6) {
-      int x = step[degree] % 32;
-      if (x == 19 || x == 24) {
-         valid = true;
-      }
-   }
-   else if (degree == 5) {
-      int x = step[degree] % 16;
-      if (x == 11 || x == 14) {
-         valid = true;
-      }
-   }
-   else {
-      if ((step[degree] + degree / 4) % powi(2, degree - 1) < 2) {
-         valid = true;
-      } 
-   }
-   
+    
    Point C = GetC(A, B);
    Point D = GetD(A, C, in); 
    
-   if (valid) {   
-      push(C);
-      push(D); 
-      push(A);
-      push(D);
-      push(D);
-      push(B);
-   } 
    SubPolygon(A, D, degree + 1, in);
    SubPolygon(D, B, degree + 1, in);
-
-   step[degree]++;
+   
+   push(C);
+   push(D); 
+   push(A);
+   push(D);
+   push(D);
+   push(B);
 } 
 
 void BasePolygon() {
@@ -98,9 +76,6 @@ void BasePolygon() {
       push(B);
       SubPolygon(A, B, 1);
    }
-   for (int i = 1; i < DEGREE; ++i) {
-      step[i] = i;
-   }
    for (int i = 0; i < SIDES; ++i) {
       float theta = delta * i + delta / 2;
       Point A{ cos(theta) * RADIUS, sin(theta) * RADIUS };
@@ -111,9 +86,6 @@ void BasePolygon() {
 
 vector<Vertex> GetPts() {
    v.clear();
-   for (int i = 1; i < DEGREE; ++i) {
-      step[i] = i;
-   }
    BasePolygon();
    return v;
 }

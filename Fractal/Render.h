@@ -29,3 +29,4 @@ void SubPolygon(Point A, Point B, int degree, bool in = false);
 void BasePolygon();
 vector<Vertex> GetPts();
 
+
