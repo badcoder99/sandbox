@@ -38,8 +38,6 @@ void DestroyD3D();
 
 VOID CALLBACK TimerProc(HWND hWnd, UINT msg, UINT idTimer, DWORD dwTime) {
       UpdateFrame();
-      LoadGraphics();
-      RenderFrame(); 
 }
 
 void ShowValue(HWND hWnd, int value) {
@@ -150,8 +148,7 @@ void InitD3D(HWND hWnd) {
 
    D3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
       D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &Device);
-
-   LoadGraphics();
+   
 }
 
 void UpdateFrame() {
@@ -162,9 +159,9 @@ void UpdateFrame() {
       double secs = static_cast<double>(thisUpdate.QuadPart - lastUpdate.QuadPart);
       secs /= Frequency.QuadPart; 
       secs = fabs(secs);
-      THETA += static_cast<float>(secs * THETA_PER_SEC);
-      while (THETA >= PI * 2) {
-         THETA -= PI * 2;
+      THETA -= static_cast<float>(secs * THETA_PER_SEC);
+      while (THETA < 0) {
+         THETA += PI * 2;
       }
       RATIO_THETA += static_cast<float>(secs * RATIO_PER_SEC);
       while (RATIO_THETA >= PI * 2) {
@@ -172,6 +169,8 @@ void UpdateFrame() {
       }
       RATIO = sin(RATIO_THETA);
       IN_RATIO = RATIO / AU;  
+      LoadGraphics();
+      RenderFrame();
    }
    lastUpdate = thisUpdate;
 }
