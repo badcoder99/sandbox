@@ -1,6 +1,7 @@
 from tkinter import *
 from math import *
 from constant import *
+from time import *
 
 def calcPtsOld():
    xGap = xMax - edgeLen
@@ -165,10 +166,13 @@ def drawR(ptA, ptB, win, deg, theta):
       drawR(ptA, ptC, win, deg - 1, theta - inc)
       drawR(ptC, ptB, win, deg - 1, theta - inc)
 
-def main():
-   root = Tk()
-   win = Canvas(root, width=xMax, height=yMax)
-   win.pack()
+count = 66
+
+def drawNext():
+   global theta
+   global edgeLen
+   global count
+   win.delete("all")
    pts = calcPts()
    n = len(pts)
    for idx in range(n):
@@ -178,7 +182,18 @@ def main():
       draw(ptA, ptB, win, deg, theta) 
       drawR(ptA, ptB, win, deg - 1, theta) 
  
-   mainloop()
+   theta += 0.01
+   edgeLen -= 1
+   count -= 1
+   win.update()
+   sleep(0.1)
+   if (count > 0):
+      drawNext()
+   else:
+      mainloop()
 
-main()
- 
+root = Tk()
+win = Canvas(root, width=xMax, height=yMax, bg="white")
+win.pack()
+
+drawNext()    
