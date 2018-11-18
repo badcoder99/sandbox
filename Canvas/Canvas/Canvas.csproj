@@ -84,23 +84,11 @@
     <Compile Include="MainPage.Designer.cs">
       <DependentUpon>MainPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="ManageCourseControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ManageCourseControl.Designer.cs">
-      <DependentUpon>ManageCourseControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="ManageUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ManageUserControl.Designer.cs">
       <DependentUpon>ManageUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NewCourseControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="NewCourseControl.Designer.cs">
-      <DependentUpon>NewCourseControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,14 +102,8 @@
     <EmbeddedResource Include="MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ManageCourseControl.resx">
-      <DependentUpon>ManageCourseControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ManageUserControl.resx">
       <DependentUpon>ManageUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NewCourseControl.resx">
-      <DependentUpon>NewCourseControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

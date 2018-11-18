@@ -13,7 +13,7 @@ namespace Canvas
     static class Database
     {
         public static readonly string dbFile = "db.sqlite";
-        private static readonly string nameFile = "names.txt";
+        private static readonly string nameFile = @"..\..\names.txt";
 
         public static void Create()
         {
