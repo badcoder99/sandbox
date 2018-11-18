@@ -57,6 +57,7 @@ namespace Canvas
             if (controlStack.Count == 1)
             {
                 mainPage.UserPanelVisible(false);
+                mainPage.Text = "Login Page";
             }
         }
 
@@ -67,6 +68,7 @@ namespace Canvas
             {
                 mainPage.SetUserName(result.ToString());
                 Push(new AdminControl());
+                mainPage.Text = "Admin Page";
                 return true;
             }
             else

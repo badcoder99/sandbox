@@ -36,8 +36,6 @@
             this.lblFirstName = new System.Windows.Forms.Label();
             this.lblLastName = new System.Windows.Forms.Label();
             this.btnUpdateUser = new System.Windows.Forms.Button();
-            this.comboUserRole = new System.Windows.Forms.ComboBox();
-            this.lblUserRole = new System.Windows.Forms.Label();
             this.btnDeleteUser = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
@@ -112,7 +110,7 @@
             // btnUpdateUser
             // 
             this.btnUpdateUser.Enabled = false;
-            this.btnUpdateUser.Location = new System.Drawing.Point(100, 224);
+            this.btnUpdateUser.Location = new System.Drawing.Point(100, 193);
             this.btnUpdateUser.Name = "btnUpdateUser";
             this.btnUpdateUser.Size = new System.Drawing.Size(200, 33);
             this.btnUpdateUser.TabIndex = 10;
@@ -120,27 +118,10 @@
             this.btnUpdateUser.UseVisualStyleBackColor = true;
             this.btnUpdateUser.Click += new System.EventHandler(this.btnUpdateUser_Click);
             // 
-            // comboUserRole
-            // 
-            this.comboUserRole.FormattingEnabled = true;
-            this.comboUserRole.Location = new System.Drawing.Point(100, 194);
-            this.comboUserRole.Name = "comboUserRole";
-            this.comboUserRole.Size = new System.Drawing.Size(200, 24);
-            this.comboUserRole.TabIndex = 11;
-            // 
-            // lblUserRole
-            // 
-            this.lblUserRole.AutoSize = true;
-            this.lblUserRole.Location = new System.Drawing.Point(23, 197);
-            this.lblUserRole.Name = "lblUserRole";
-            this.lblUserRole.Size = new System.Drawing.Size(71, 17);
-            this.lblUserRole.TabIndex = 12;
-            this.lblUserRole.Text = "User Role";
-            // 
             // btnDeleteUser
             // 
             this.btnDeleteUser.Enabled = false;
-            this.btnDeleteUser.Location = new System.Drawing.Point(100, 263);
+            this.btnDeleteUser.Location = new System.Drawing.Point(100, 232);
             this.btnDeleteUser.Name = "btnDeleteUser";
             this.btnDeleteUser.Size = new System.Drawing.Size(200, 33);
             this.btnDeleteUser.TabIndex = 13;
@@ -242,8 +223,6 @@
             this.Controls.Add(this.lblSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.btnDeleteUser);
-            this.Controls.Add(this.lblUserRole);
-            this.Controls.Add(this.comboUserRole);
             this.Controls.Add(this.btnUpdateUser);
             this.Controls.Add(this.lblLastName);
             this.Controls.Add(this.lblFirstName);
@@ -268,8 +247,6 @@
         private System.Windows.Forms.Label lblFirstName;
         private System.Windows.Forms.Label lblLastName;
         private System.Windows.Forms.Button btnUpdateUser;
-        private System.Windows.Forms.ComboBox comboUserRole;
-        private System.Windows.Forms.Label lblUserRole;
         private System.Windows.Forms.Button btnDeleteUser;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label lblSearch;

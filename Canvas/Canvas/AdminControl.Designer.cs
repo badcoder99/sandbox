@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.btnManageUsers = new System.Windows.Forms.Button();
-            this.btnManageCourses = new System.Windows.Forms.Button();
-            this.btnNewCourse = new System.Windows.Forms.Button();
             this.panelAdmin = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
@@ -44,26 +42,6 @@
             this.btnManageUsers.UseVisualStyleBackColor = true;
             this.btnManageUsers.Click += new System.EventHandler(this.btnManageUsers_Click);
             // 
-            // btnManageCourses
-            // 
-            this.btnManageCourses.Location = new System.Drawing.Point(305, 4);
-            this.btnManageCourses.Name = "btnManageCourses";
-            this.btnManageCourses.Size = new System.Drawing.Size(145, 33);
-            this.btnManageCourses.TabIndex = 3;
-            this.btnManageCourses.Text = "Manage Courses";
-            this.btnManageCourses.UseVisualStyleBackColor = true;
-            this.btnManageCourses.Click += new System.EventHandler(this.btnManageCourses_Click);
-            // 
-            // btnNewCourse
-            // 
-            this.btnNewCourse.Location = new System.Drawing.Point(154, 4);
-            this.btnNewCourse.Name = "btnNewCourse";
-            this.btnNewCourse.Size = new System.Drawing.Size(145, 33);
-            this.btnNewCourse.TabIndex = 2;
-            this.btnNewCourse.Text = "New Course";
-            this.btnNewCourse.UseVisualStyleBackColor = true;
-            this.btnNewCourse.Click += new System.EventHandler(this.btnNewCourse_Click);
-            // 
             // panelAdmin
             // 
             this.panelAdmin.Location = new System.Drawing.Point(3, 43);
@@ -76,8 +54,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panelAdmin);
-            this.Controls.Add(this.btnNewCourse);
-            this.Controls.Add(this.btnManageCourses);
             this.Controls.Add(this.btnManageUsers);
             this.Name = "AdminControl";
             this.Size = new System.Drawing.Size(757, 528);
@@ -88,8 +64,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnManageUsers;
-        private System.Windows.Forms.Button btnManageCourses;
-        private System.Windows.Forms.Button btnNewCourse;
         private System.Windows.Forms.Panel panelAdmin;
     }
 }
