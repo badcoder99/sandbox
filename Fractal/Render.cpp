@@ -5,7 +5,7 @@ vector<Vertex> v;
 void push(Point pt) { 
    float x = pt.x * cos(THETA) - pt.y * sin(THETA);
    float y = pt.y * cos(THETA) + pt.x * sin(THETA);
-   v.push_back({ GetX(x), GetY(y), 0, D3DCOLOR_ARGB(0, 0, 0, 0) });
+   v.push_back({ GetX(x), GetY(y), 0, 0, D3DCOLOR_ARGB(0, 0, 0, 0) });
 }
 
 float GetX(float x) {

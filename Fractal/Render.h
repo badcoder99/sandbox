@@ -12,7 +12,7 @@ using namespace std;
 #include "Globals.h"
 
 struct Vertex {
-   float x, y, z;
+   float x, y, z, a;
    DWORD color;
 };
 
