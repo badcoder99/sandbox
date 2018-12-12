@@ -2,7 +2,7 @@
 
 constexpr int SCREEN_WIDTH = 600;
 constexpr int SCREEN_HEIGHT = 600;
-constexpr int FRAME_RATE = 60;
+constexpr int FRAME_RATE = 144;
 
 constexpr float PI = 3.14159265358;
 constexpr float AU = 1.61803398875;
